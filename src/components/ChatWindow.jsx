@@ -1,4 +1,6 @@
 import React, { Component, useState } from "react";
+import MessageItem from "./MessageItem";
+
 import EmojiPicker from 'emoji-picker-react';
 import "./ChatWindow.css";
 import SearchIcon from "@material-ui/icons/Search";
@@ -9,7 +11,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import SendIcon from "@material-ui/icons/Send";
 import MicIcon from "@material-ui/icons/Mic";
 
-export default () => {
+
+export default ({user}) => {
 
     let recognition = null;
     let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -20,6 +23,13 @@ export default () => {
     const [emojiOpen, setEmojiOpen] = useState(false);
     const [text, setText] = useState('');
     const [listening, setListening] = useState(false);
+    const [list, setList] = useState([
+      {author: 123, body: 'blablabla'},
+      {author: 123, body: 'blablabla'},
+      {author: 1234, body: 'blabla'},
+    ]);
+
+
     const handleEmojiClick = (e, emojiObject) => {
         setText( text + emojiObject.emoji )
     }
@@ -81,6 +91,13 @@ export default () => {
       </div>
 
       <div className="chatWindow--body">
+        {list.map((item, key)=>(
+            <MessageItem
+              key={key}
+              data={item}
+              user={user}
+            />
+        ))}
 
       </div>
       
